@@ -110,6 +110,20 @@ function App() {
     return <div>Loading...</div>;
   }
 
+  // Add this new function to handle the download
+  const handleDownloadRecipes = () => {
+    const recipesJson = JSON.stringify(recipes, null, 2);
+    const blob = new Blob([recipesJson], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "recipes.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="App">
       <h1>Cooking Recipe Manager</h1>
@@ -127,6 +141,7 @@ function App() {
         >
           Add New Recipe
         </button>
+        <button onClick={handleDownloadRecipes}>Download Recipes</button>
         <ul>
           {recipes.map((recipe) => (
             <li key={recipe.id}>
