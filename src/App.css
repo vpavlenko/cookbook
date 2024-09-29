@@ -81,6 +81,12 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: move; /* Add this line */
+}
+
+.recipe-list li.dragging {
+  opacity: 0.5;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .recipe-form {

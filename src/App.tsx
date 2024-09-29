@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import RecipeForm from "./components/RecipeForm";
 
@@ -59,6 +59,7 @@ function App() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [draggedRecipe, setDraggedRecipe] = useState<Recipe | null>(null);
 
   useEffect(() => {
     console.log("Initial useEffect running");
@@ -103,6 +104,36 @@ function App() {
     setSelectedRecipe(null);
   };
 
+  const handleDragStart = (
+    e: React.DragEvent<HTMLLIElement>,
+    recipe: Recipe
+  ) => {
+    setDraggedRecipe(recipe);
+    e.currentTarget.classList.add("dragging");
+  };
+
+  const handleDragEnd = (e: React.DragEvent<HTMLLIElement>) => {
+    e.currentTarget.classList.remove("dragging");
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (
+    e: React.DragEvent<HTMLLIElement>,
+    targetRecipe: Recipe
+  ) => {
+    e.preventDefault();
+    if (draggedRecipe && draggedRecipe !== targetRecipe) {
+      const updatedRecipes = recipes.filter((r) => r !== draggedRecipe);
+      const targetIndex = updatedRecipes.indexOf(targetRecipe);
+      updatedRecipes.splice(targetIndex, 0, draggedRecipe);
+      setRecipes(updatedRecipes);
+    }
+    setDraggedRecipe(null);
+  };
+
   console.log("Current recipes state:", recipes);
 
   if (!isLoaded) {
@@ -144,7 +175,14 @@ function App() {
         <button onClick={handleDownloadRecipes}>Download Recipes</button>
         <ul>
           {recipes.map((recipe) => (
-            <li key={recipe.id}>
+            <li
+              key={recipe.id}
+              draggable
+              onDragStart={(e) => handleDragStart(e, recipe)}
+              onDragEnd={handleDragEnd}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, recipe)}
+            >
               {recipe.name}
               <button onClick={() => setSelectedRecipe(recipe)}>Edit</button>
               <button onClick={() => handleDeleteRecipe(recipe.id)}>
