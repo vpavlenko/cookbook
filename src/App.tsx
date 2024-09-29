@@ -5,7 +5,6 @@ import RecipeForm from "./components/RecipeForm";
 interface Ingredient {
   name: string;
   amount: number;
-  unit: string;
 }
 
 interface Recipe {
@@ -20,11 +19,11 @@ const boilerplateRecipes: Recipe[] = [
     id: "1",
     name: "Spaghetti Carbonara",
     ingredients: [
-      { name: "Spaghetti", amount: 400, unit: "g" },
-      { name: "Pancetta", amount: 150, unit: "g" },
-      { name: "Eggs", amount: 4, unit: "pcs" },
-      { name: "Parmesan cheese", amount: 50, unit: "g" },
-      { name: "Black pepper", amount: 1, unit: "tsp" },
+      { name: "Spaghetti", amount: 400 },
+      { name: "Pancetta", amount: 150 },
+      { name: "Eggs", amount: 200 },
+      { name: "Parmesan cheese", amount: 50 },
+      { name: "Black pepper", amount: 5 },
     ],
     portions: 4,
   },
@@ -32,10 +31,10 @@ const boilerplateRecipes: Recipe[] = [
     id: "2",
     name: "Classic Caesar Salad",
     ingredients: [
-      { name: "Romaine lettuce", amount: 1, unit: "head" },
-      { name: "Croutons", amount: 100, unit: "g" },
-      { name: "Parmesan cheese", amount: 50, unit: "g" },
-      { name: "Caesar dressing", amount: 60, unit: "ml" },
+      { name: "Romaine lettuce", amount: 300 },
+      { name: "Croutons", amount: 100 },
+      { name: "Parmesan cheese", amount: 50 },
+      { name: "Caesar dressing", amount: 60 },
     ],
     portions: 2,
   },
@@ -43,13 +42,13 @@ const boilerplateRecipes: Recipe[] = [
     id: "3",
     name: "Chocolate Chip Cookies",
     ingredients: [
-      { name: "All-purpose flour", amount: 280, unit: "g" },
-      { name: "Butter", amount: 230, unit: "g" },
-      { name: "Brown sugar", amount: 200, unit: "g" },
-      { name: "White sugar", amount: 100, unit: "g" },
-      { name: "Eggs", amount: 2, unit: "pcs" },
-      { name: "Vanilla extract", amount: 2, unit: "tsp" },
-      { name: "Chocolate chips", amount: 340, unit: "g" },
+      { name: "All-purpose flour", amount: 280 },
+      { name: "Butter", amount: 230 },
+      { name: "Brown sugar", amount: 200 },
+      { name: "White sugar", amount: 100 },
+      { name: "Eggs", amount: 100 },
+      { name: "Vanilla extract", amount: 10 },
+      { name: "Chocolate chips", amount: 340 },
     ],
     portions: 24,
   },
@@ -127,6 +126,7 @@ function App() {
   return (
     <div className="App">
       <h1>Cooking Recipe Manager</h1>
+      <p>All ingredient amounts are in grams</p>
       <div className="recipe-list">
         <h2>Recipes ({recipes.length})</h2>
         <button
